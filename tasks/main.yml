@@ -11,13 +11,13 @@
   stat:
     path: /sbin/getenforce
   register: selinux_getenforce_st
-  always_run: True
+  check_mode: no
 
 - name: selinux | check enabled
   become: yes
   command: getenforce
   register: selinux_getenforce
-  always_run: True
+  check_mode: no
   changed_when: False
   when: selinux_getenforce_st.stat.exists
 
