@@ -9,13 +9,13 @@
 # Always run including in check mode
 - name: selinux | check exists
   stat:
-    path: /sbin/getenforce
+    path: /usr/sbin/getenforce
   register: selinux_getenforce_st
   check_mode: no
 
 - name: selinux | check enabled
   become: yes
-  command: getenforce
+  command: /usr/sbin/getenforce
   register: selinux_getenforce
   check_mode: no
   changed_when: False
