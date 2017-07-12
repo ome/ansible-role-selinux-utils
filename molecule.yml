@@ -16,11 +16,11 @@ vagrant:
         memory: 512
         cpus: 1
   instances:
-    - name: selinux-utils
+    - name: selinux-utils-vagrant
 
 docker:
   containers:
-  - name: selinux-utils
+  - name: selinux-utils-docker
     image: centos
     image_version: 7
 
