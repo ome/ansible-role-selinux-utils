@@ -27,11 +27,7 @@
 
 - name: system packages | install selinux utilities
   become: yes
-  yum:
-    name: "{{ item }}"
+  package:
+    name: ["libselinux-python", "libsemanage-python", "policycoreutils-python"]
     state: present
-  with_items:
-    - libselinux-python
-    - libsemanage-python
-    - policycoreutils-python
   when: selinux_enabled
