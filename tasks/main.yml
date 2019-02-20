@@ -28,6 +28,9 @@
 - name: system packages | install selinux utilities
   become: yes
   package:
-    name: ["libselinux-python", "libsemanage-python", "policycoreutils-python"]
+    name:
+      - libselinux-python
+      - libsemanage-python
+      - policycoreutils-python
     state: present
   when: selinux_enabled
