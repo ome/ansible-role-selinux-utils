@@ -2,7 +2,7 @@ SELinux Utils
 =============
 
 [![Build Status](https://travis-ci.org/ome/ansible-role-selinux-utils.svg)](https://travis-ci.org/ome/ansible-role-selinux-utils)
-[![Ansible Role](https://img.shields.io/ansible/role/14776.svg)](https://galaxy.ansible.com/ome/selinux_utils/)
+[![Ansible Role](https://img.shields.io/ansible/role/41124.svg)](https://galaxy.ansible.com/ome/selinux_utils/)
 
 Sets a host variable indicating whether SELinux is enabled or not.
 Installs utilities for interacting with SELinux if it is.
