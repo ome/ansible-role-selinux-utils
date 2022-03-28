@@ -6,33 +6,9 @@
 # missing: https://github.com/ansible/ansible/issues/16612
 # so use getenforce instead
 
-# Always run including in check mode
-- name: selinux | check exists
-  stat:
-    path: /usr/sbin/getenforce
-  register: selinux_getenforce_st
-  check_mode: false
+- import_tasks: redhat.yaml
+  when: ansible_os_family | lower == 'redhat'
 
-- name: selinux | check enabled
-  become: true
-  command: /usr/sbin/getenforce
-  register: selinux_getenforce
-  check_mode: false
-  changed_when: false
-  when: selinux_getenforce_st.stat.exists
+- import_tasks: debian.yaml
+  when: ansible_os_family | lower == 'debian'
 
-- name: system packages | set selinux variable
-  set_fact:
-    selinux_enabled: >-
-      {{ selinux_getenforce_st.stat.exists and
-         selinux_getenforce.stdout != 'Disabled' }}
-
-- name: system packages | install selinux utilities
-  become: true
-  package:
-    name:
-      - libselinux-python
-      - libsemanage-python
-      - policycoreutils-python
-    state: present
-  when: selinux_enabled

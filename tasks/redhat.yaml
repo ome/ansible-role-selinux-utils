@@ -1,0 +1,40 @@
+# Always run including in check mode
+- name: selinux | check exists
+  stat:
+    path: /usr/sbin/getenforce
+  register: selinux_getenforce_st
+  check_mode: false
+
+- name: selinux | check enabled
+  become: true
+  command: /usr/sbin/getenforce
+  register: selinux_getenforce
+  check_mode: false
+  changed_when: false
+  when: selinux_getenforce_st.stat.exists
+
+- name: system packages | set selinux variable
+  set_fact:
+    selinux_enabled: >-
+      {{ selinux_getenforce_st.stat.exists and
+         selinux_getenforce.stdout != 'Disabled' }}
+
+- name: system packages | install selinux utilities
+  become: true
+  package:
+    name:
+      - libselinux-python
+      - libsemanage-python
+      - policycoreutils-python
+    state: present
+  when: selinux_enabled and ansible_facts['distribution_major_version'] == "7"
+
+- name: system packages | install selinux utilities
+  become: true
+  package:
+    name:
+      - python3-libselinux
+      - python3-libsemanage
+      - policycoreutils-python-utils
+    state: present
+  when: selinux_enabled and ansible_facts['distribution_major_version'] == "8"
