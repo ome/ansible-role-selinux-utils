@@ -1,0 +1,23 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint: |
+    yamllint .
+    ansible-lint
+    flake8
+platforms:
+  - name: selinux-utils-docker
+    image: rockylinux:8
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+  playbooks:
+    converge: ../resources/converge.yml
+verifier:
+  name: testinfra
+  directory: ../resources/tests
+
+# TODO: Add a vagrant test scenario
