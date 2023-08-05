@@ -4,11 +4,11 @@ galaxy_info:
   description: Installs utilities and sets variable for interacting with SELinux
   company: Open Microscopy Environment
   license: BSD
-  min_ansible_version: 2.3
+  min_ansible_version: "2.3"
   platforms:
     - name: EL
       versions:
-        - 7
+        - "7"
   namespace: ome
   role_name: selinux_utils
   galaxy_tags: ['selinux']
