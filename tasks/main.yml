@@ -27,12 +27,23 @@
       {{ selinux_getenforce_st.stat.exists and
          selinux_getenforce.stdout != 'Disabled' }}
 
+- name : check rocky.repo file
+  stat:
+    path: /etc/yum.repos.d/rocky.repo
+  register: rockyrepo_name
+
+- name: system packages | Add CRB repository for RHEL
+  become: true
+  ansible.builtin.command:
+    subscription-manager repos --enable codeready-builder-for-rhel-9-x86_64-rpms
+  when: ansible_os_family == 'RedHat' and not rockyrepo_name.stat.exists
+
 - name: system packages | install selinux utilities
   become: true
   package:
     name:
-      - libselinux-python
-      - libsemanage-python
-      - policycoreutils-python
+      - libselinux-python3
+      - libsemanage-python3
+      - policycoreutils-python3
     state: present
   when: selinux_enabled
