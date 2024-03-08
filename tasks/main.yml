@@ -40,10 +40,12 @@
 
 - name: system packages | install selinux utilities
   become: true
-  package:
+  dnf:
     name:
       - libselinux-python3
       - libsemanage-python3
       - policycoreutils-python3
     state: present
   when: selinux_enabled
+
+#  dnf install policycoreutils-python-utils-3.5-3.el9_3.noarch
