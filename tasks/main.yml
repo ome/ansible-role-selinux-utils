@@ -3,7 +3,7 @@
 
 - name: system packages | set selinux variable
   set_fact:
-    selinux_enabled: "{{ true if ansible_facts.selinux.status == 'enabled' else false }}"
+    selinux_enabled: "{{ ansible_facts.selinux.status == 'enabled' }}"
 
 - name : check rocky.repo file
   stat:
