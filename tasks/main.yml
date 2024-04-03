@@ -1,31 +1,9 @@
 ---
 # tasks file for roles/selinux-utils
 
-# NOTE: The Ansible variable `ansible_selinux.status == "enabled"` should
-# autodetect SELinux, but may give a misleading result if a dependency is
-# missing: https://github.com/ansible/ansible/issues/16612
-# so use getenforce instead
-
-# Always run including in check mode
-- name: selinux | check exists
-  stat:
-    path: /usr/sbin/getenforce
-  register: selinux_getenforce_st
-  check_mode: false
-
-- name: selinux | check enabled
-  become: true
-  command: /usr/sbin/getenforce
-  register: selinux_getenforce
-  check_mode: false
-  changed_when: false
-  when: selinux_getenforce_st.stat.exists
-
 - name: system packages | set selinux variable
   set_fact:
-    selinux_enabled: >-
-      {{ selinux_getenforce_st.stat.exists and
-         selinux_getenforce.stdout != 'Disabled' }}
+    selinux_enabled: "{{ ansible_facts.selinux.status == 'enabled' }}"
 
 - name : check rocky.repo file
   stat:
