@@ -13,7 +13,6 @@ This role will set the host variable `selinux_enabled: {True,False}` which can b
 
 Ideally this role should be included as a dependency in `meta/main.yml` of any roles that need to know whether SELinux is enabled.
 
-
 Example Playbook
 ----------------
 

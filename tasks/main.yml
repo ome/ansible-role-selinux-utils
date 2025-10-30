@@ -2,11 +2,11 @@
 # tasks file for roles/selinux-utils
 
 - name: system packages | set selinux variable
-  set_fact:
+  ansible.builtin.set_fact:
     selinux_enabled: "{{ ansible_facts.selinux.status == 'enabled' }}"
 
 - name : check rocky.repo file
-  stat:
+  ansible.builtin.stat:
     path: /etc/yum.repos.d/rocky.repo
   register: rockyrepo_name
 
@@ -18,7 +18,7 @@
 
 - name: system packages | install selinux utilities
   become: true
-  package:
+  ansible.builtin.package:
     name:
       - libselinux-python3
       - libsemanage-python3
